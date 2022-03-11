@@ -1,0 +1,26 @@
+1.
+2.
+3.
+4.
+5. Xác định các task cụ thể cần thực hiện (sprint)
+	1. Tải, cài đặt, kiểm tra các công cụ cần thiết
+	(Nodejs + VSCode + Gg chrome + Postman + Git)
+	2. 
+	Tạo folder 'twitter-project'
+	Khởi tạo git: git init (theo dõi sự thay đổi và quản lý code dễ dàng)
+	Tạo folder 'back-end' trong folder 'twitter-project'
+	Tạo file server.js để làm entry point cho npm
+	Npm init (twitter-project/back-end/) (khởi tạo npm)
+	Tạo server (package: express) (server.js) + Test trên trình duyệt
+	3.
+	Cài đặt nodemon (giúp tự động restart lại sv sau mỗi lần lưu)
+	Thay đổi script trong package.json để chạy nodemon
+	cors và bodyParser (app.use())	
+	4.
+	Xây dựng bố cục file - folder: routes, controllers, models, middlewares, configs/db.js - dùng để kết nối db
+	5.
+	Tạo biến môi trường (.env) (package: dotenv()) (global variable + bảo mật thông tin + dễ dàng quản lý)
+	Kết nối sv với db (MongoDB: Atlas + package: mongoose)
+
+
+
