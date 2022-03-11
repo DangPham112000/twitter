@@ -7,6 +7,7 @@ connectDB();
 
 const express = require('express');
 const cors = require('cors');
+const authRoute = require('./routes/authRoute');
 
 const app = express();
 
@@ -16,14 +17,13 @@ app.use(cors());
 //Body Parser
 app.use(express.json());
 
+// Mount the route
+app.use('/api/v1/auth', authRoute);
 
 
-app.get('/', (req, res, next) => {
-    res.status(200).json({
-        status: 'success',
-        data: {post: [{'auth': 'dangpham', 'age': 22}]}
-    })
-})
+app.get('/', (req,res,next) => {
+    res.json('first step');
+});
 
 
 const port = process.env.APP_PORT;
