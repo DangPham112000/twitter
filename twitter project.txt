@@ -23,4 +23,22 @@
 	Kết nối sv với db (MongoDB: Atlas + package: mongoose)
 
 
+// Phân tích component
+App	-header
+	-form(create post)
+	-post list	-post item
+	-login form
+	-register form
 
+// Giao diện
+Font: Montserrat 400 600 900;
+Cỡ chữ:
+    --fs-large: 2.5rem;
+    --fs-medium: 1.8rem;
+    --fs-small: 1.6rem;
+Màu
+    --color-dark-blue: #202040;
+    --color-medium-blue: #404080;
+    --color-light-blue: #40bec7;
+    --color-light-red: #ff6363;
+    --color-light-grey: #eaeaea;

@@ -3,7 +3,7 @@ const Post = require("../models/Post");
 // get all post
 exports.getAllPosts = async (req, res, next) => {
     try {
-        const posts = await Post.find({}).populate('author');
+        const posts = await Post.find({}).populate('author', '_id name').select('_id content createdAt');
         res.status(200).json({
             status: 'success',
             results: posts.length,
@@ -25,7 +25,7 @@ exports.createOnePost = async (req, res, next) => {
             data: { post }
         })
     } catch (error) {
-        res.json(error);
+        return next(error);
     }
 }
 
@@ -40,7 +40,7 @@ exports.updateOnePost = async (req, res, next) => {
             data: { post }
         })
     } catch (error) {
-        res.json(error);
+        return next(error);
     }
 }
 
@@ -55,6 +55,6 @@ exports.deleteOnePost = async (req, res, next) => {
             message: 'Post has been deleted'
         })
     } catch (error) {
-        res.json(error);
+        return next(error);
     }
 }
