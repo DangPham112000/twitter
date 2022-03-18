@@ -1,8 +1,5 @@
-1.
-2.
-3.
-4.
-5. Xác định các task cụ thể cần thực hiện (sprint)
+Nguồn tham khảo: https://www.youtube.com/watch?v=KsfLxERM360&list=PLtn74taaT412Wx3EfUvruLMuTGaqMZYiS&index=40&ab_channel=TuTran
+Xác định các task cụ thể cần thực hiện (sprint)
 	1. Tải, cài đặt, kiểm tra các công cụ cần thiết
 	(Nodejs + VSCode + Gg chrome + Postman + Git)
 	2. 

@@ -1,40 +1,101 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useContext, useState } from 'react'
+import AppContext from './AppContext';
 
-export default function PostItem() {
+export default function PostItem({ post }) {
+    const {dispatch} = useContext(AppContext);
+    const [openEditForm, setOpenEditForm] = useState(false);
+    const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+    const [postEditContent, setPostEditContent] = useState(post.content);
+
+    const handleSubmitPost = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const option = {
+                method: 'PUT',
+                url: `/api/v1/posts/${post._id}`,
+                headers: {
+                    authorization: 'Bearer ' + token,
+                },
+                data: {
+                    content: postEditContent
+                },
+            }
+            await axios(option);
+            dispatch({ type: 'UPDATE_ONE_POST', payload: { _id: post._id, content: postEditContent } })
+            
+            setOpenEditForm(false);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    
+    const handleDeletePost = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const option = {
+                method: 'delete',
+                url: `/api/v1/posts/${post._id}`,
+                headers: {
+                    authorization: 'Bearer ' + token,
+                }
+            }
+            await axios(option);
+            dispatch({type: 'DELETE_ONE_POST', payload: {_id: post._id}});
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    
+    let date = new Date(post.createdAt);
     return (
         <div className="post-item">
             <p className="post-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto pariatur tempore ad molestias rem dolores. A libero delectus minima natus maiores perspiciatis eligendi modi doloremque, dolores aliquam. Enim, id nulla.
+                {post.content}
             </p>
             <div className="post-footer">
                 <div className="post-infos">
-                    <span>Dang</span>
-                    <span>Date: 14/11/2021</span>
+                    <span>by {post.author.name}</span>
+                    <span>Date: {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</span>
                 </div>
-                <div className="post-edit-delete">
-                    <span>Edit</span>
-                    <span>Delete</span>
-                    <span className="delete-question">Are you sure?</span>
-                    <span>Yes</span>
-                    <span>No</span>
-                </div>
-            </div>
-            <div className="post-edit-form">
-                <form action="" className="edit-form">
-                    <textarea
-                        type="text"
-                        name="content"
-                        id="content"
-                        className="content"
-                        placeholder="What's happen?"
-                    >Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ullam, nisi qui eos ab fugiat quibusdam omnis ratione molestias reprehenderit delectus quia eligendi perferendis, reiciendis esse eius aliquam blanditiis laborum!
-                    </textarea>
-                    <div className="btn-container">
-                        <button className="btn" type="button">Update</button>
-                        <button className="btn" type="button">Cancel</button>
+                {post.isEditable && (
+                    <div className="post-edit-delete">
+                        {
+                            openDeleteConfirm ? (
+                                <>
+                                    <span className="delete-question">Are you sure?</span>
+                                    <span onClick={handleDeletePost}>Yes</span>
+                                    <span onClick={() => setOpenDeleteConfirm(false)}>No</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span onClick={() => setOpenEditForm(true)}>Edit</span>
+                                    <span onClick={() => setOpenDeleteConfirm(true)}>Delete</span>
+                                </>
+                            )
+                        }
                     </div>
-                </form>
+                )}
             </div>
+            {openEditForm && (
+                <div className="post-edit-form">
+                    <form className="edit-form">
+                        <textarea
+                            type="text"
+                            name="content"
+                            id="content"
+                            className="content"
+                            placeholder="What's happen?"
+                            defaultValue={postEditContent}
+                            onChange={(e) => setPostEditContent(e.target.value)}
+                        />
+                        <div className="btn-container">
+                            <button className="btn" type="button" onClick={handleSubmitPost}>Update</button>
+                            <button className="btn" type="button" onClick={() => setOpenEditForm(false)}>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            )}
         </div>
     )
 }

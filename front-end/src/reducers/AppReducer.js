@@ -1,6 +1,6 @@
 export default function AppReducer(state, action) {
     switch (action.type) {
-        case "GET_CURRENT_USER":
+        case "CURRENT_USER":
             return {
                 ...state,
                 user: action.payload
